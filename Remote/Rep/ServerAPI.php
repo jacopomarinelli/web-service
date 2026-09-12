@@ -1,6 +1,6 @@
 <?php
 
-class ClientiAPI
+class ServerAPI
 {
     private ClientiRepository $clienti;
     private UtenzeRepository $utenze;

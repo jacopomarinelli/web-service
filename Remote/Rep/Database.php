@@ -1,30 +1,39 @@
 <?php
 
-class Database
-{
-    private PDO $connection;
+class Database {
 
-    public function __construct()
-    {
-        $servername = "localhost";
-        $dbname = "nome_del_database";
-        $username = "root";
-        $password = "";
+    private static ?PDO $connection = null;
 
-        $this->connection = new PDO(
-            "mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=utf8mb4",
-            $username,
-            $password
-        );
+    // CAMBIA QUI: "locale" oppure "altervista"
+    private static string $env = "locale";
 
-        $this->connection->setAttribute(
-            PDO::ATTR_ERRMODE,
-            PDO::ERRMODE_EXCEPTION
-        );
-    }
+    public static function getConnection(): PDO {
 
-    public function getConnection(): PDO
-    {
-        return $this->connection;
+        if (self::$connection === null) {
+
+            if (self::$env === "altervista") {
+
+                self::$connection = new PDO(
+                    "mysql:host=localhost;dbname=my_aquabear;charset=utf8",
+                    "aquabear",
+                    ""
+                );
+
+            } else { // locale (XAMPP)
+
+                self::$connection = new PDO(
+                    "mysql:host=localhost;dbname=my_aquabear;charset=utf8",
+                    "root",
+                    ""
+                );
+            }
+
+            self::$connection->setAttribute(
+                PDO::ATTR_ERRMODE,
+                PDO::ERRMODE_EXCEPTION
+            );
+        }
+
+        return self::$connection;
     }
 }
