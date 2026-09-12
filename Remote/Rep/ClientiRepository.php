@@ -9,11 +9,8 @@ class ClientiRepository {
     }
 
     public function recupera(): array {
-
         $sql = "SELECT * FROM CLIENTI";
-
         $stmt = $this->db->query($sql);
-
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

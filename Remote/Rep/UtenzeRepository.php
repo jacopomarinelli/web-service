@@ -9,11 +9,8 @@ class UtenzeRepository {
     }
 
     public function recupera(): array {
-
         $sql = "SELECT * FROM UTENZE";
-
         $stmt = $this->db->query($sql);
-
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

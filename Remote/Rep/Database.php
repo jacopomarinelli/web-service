@@ -1,15 +1,20 @@
 <?php
 
-class Database {
-
+class Database
+{
     private PDO $connection;
 
-    public function __construct() {
+    public function __construct()
+    {
+        $servername = "localhost";
+        $dbname = "nome_del_database";
+        $username = "root";
+        $password = "";
 
         $this->connection = new PDO(
-            "mysql:host=localhost;dbname=my_aquabear;charset=utf8",
-            "aquabear",
-            ""
+            "mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=utf8mb4",
+            $username,
+            $password
         );
 
         $this->connection->setAttribute(
@@ -18,7 +23,8 @@ class Database {
         );
     }
 
-    public function getConnection(): PDO {
+    public function getConnection(): PDO
+    {
         return $this->connection;
     }
 }
