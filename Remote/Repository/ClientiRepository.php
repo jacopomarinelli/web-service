@@ -1,6 +1,6 @@
 <?php
 
-class FattureRepository {
+class ClientiRepository {
 
     private PDO $db;
 
@@ -8,8 +8,8 @@ class FattureRepository {
         $this->db = $database->getConnection();
     }
 
-    public function recupera(): array {
-        $sql = "SELECT * FROM FATTURE";
+    public function recuperaClienti(offset, tuple): array {
+        $sql = "SELECT * FROM CLIENTI LIMIT offset, tuple;";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

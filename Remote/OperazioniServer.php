@@ -17,13 +17,15 @@ class ServerAPI
         $this->fatture = new FattureRepository($database);
     }
 
-    public function esegui(): void
-    {
+    public function esegui(): void{
+        {
         header("Content-Type: application/json; charset=UTF-8");
 
-        $nome = $_GET["nome"] ?? null;
+        $tabella = $_GET["tabella"] ?? null;
+        $offset = $_GET["offset"] ?? null;
+        $tuple = $_GET["tuple"] ?? null;
 
-        if ($nome === null) {
+        if ($tabella === null) {
             http_response_code(400);
             echo json_encode([
                 "errore" => "Parametro nome mancante"
@@ -31,21 +33,21 @@ class ServerAPI
             exit;
         }
 
-        switch ($nome) {
+        switch ($tabella) {
             case "CLIENTI":
-                $risultato = $this->clienti->recupera();
+                $risultato = $this->clienti->recuperaClienti($offset, $tuple);
                 break;
 
             case "UTENZE":
-                $risultato = $this->utenze->recupera();
+                $risultato = $this->utenze->recuperaUtenze($offset, $tuple);
                 break;
 
             case "LETTURE":
-                $risultato = $this->letture->recupera();
+                $risultato = $this->letture->recuperaLetture($offset, $tuple);
                 break;
 
             case "FATTURE":
-                $risultato = $this->fatture->recupera();
+                $risultato = $this->fatture->recuperaFatture($offset, $tuple);
                 break;
 
             default:
@@ -57,5 +59,6 @@ class ServerAPI
         }
 
         echo json_encode($risultato);
+        }
     }
 }
