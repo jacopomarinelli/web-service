@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/OperazioniServer.php';
 
+/**Classe API che permette l'interfaccia tra il codice PHP 
+ * di recupero dati SQL con la Servlet Java */
 class API {
 
     private OperazioniServer $op;
@@ -10,8 +12,9 @@ class API {
         $this->op = new OperazioniServer();
     }
 
+    /** Permette trasferimento dei dati dal database su Altervista alla Servlet Java*/
     public function carica(){
-        $op->esegui();
+        $this->op->esegui();
     }
 
 }

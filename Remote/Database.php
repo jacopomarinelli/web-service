@@ -4,36 +4,31 @@ class Database {
 
     private static ?PDO $connection = null;
 
-    // CAMBIA QUI: "locale" oppure "altervista"
-    private static string $env = "locale";
+    //variabile che indica dove lavora il database, inserire "locale" oppure "altervista"
+    private static string $env = "altervista";
 
     public static function getConnection(): PDO {
-
         if (self::$connection === null) {
-
+            //codice database su altervista
             if (self::$env === "altervista") {
-
                 self::$connection = new PDO(
                     "mysql:host=localhost;dbname=my_aquabear;charset=utf8",
                     "aquabear",
                     ""
                 );
-
-            } else { // locale (XAMPP)
-
+            } else { //codice per funzionamento in locale (XAMPP)
                 self::$connection = new PDO(
                     "mysql:host=localhost;dbname=my_aquabear;charset=utf8",
                     "root",
                     ""
                 );
             }
-
+            //gestione errori di connessione
             self::$connection->setAttribute(
                 PDO::ATTR_ERRMODE,
                 PDO::ERRMODE_EXCEPTION
             );
         }
-
         return self::$connection;
     }
 }
