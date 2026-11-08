@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Trasferimento dati</title>
+        <link rel="stylesheet" href="stile.css">
+        <script src="funzioni.js" defer></script>
+    </head>
+
+    <body>
+        <div class="titolo">
+            <h1>SERVIZIO TRASFERIMENTO DATI</h1>
+        </div>
+
+        <div class="descrizione">
+            <p id="istruzioni">
+                Seleziona la tabella da cui trasferire i dati premendo il pulsante corrispondente.
+                <br>
+                Nello spazio sotto i pulsanti verr&agrave; mostrati i dettagli dell'operazione.
+            </p>
+        </div>
+
+        <div class="pulsanti">
+            <input type="button" value="CLIENTI" onclick="">
+            
+            <input type="button" value="FATTURE" onclick="">
+
+            <input type="button" value="UTENZE" onclick="">
+
+            <input type="button" value="LETTURE" onclick="">
+        </div>
+
+        <div class="operazione">
+            <h4 id="tipo-operazione">
+                OPERAZIONE DA AVVIARE <!-- DA AVVIARE / IN CORSO / CONCLUSA --> 
+            </h4>
+            <p id="andamento-operazione">
+                numero file scaricati
+            </p>
+        </div>
+    </body>
+</html>

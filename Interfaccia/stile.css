@@ -1,0 +1,59 @@
+body{
+    background-color: whitesmoke;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.titolo{
+    align-self: center;
+    justify-content: center;
+}
+
+.descrizione{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: 25px;
+}
+
+#istruzioni{
+    text-align: center;
+}
+
+.pulsanti{
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    padding: 0 20px;
+}
+
+input{
+    background-color: rgba(0, 255, 68, 0.677);
+    border-width: 3px;
+    border-radius: 10px;
+    box-shadow: 2px 2px rgba(77, 74, 74, 0.675);
+    height: 60px;
+    width: 120px;
+    margin: 0 15px;
+    /*color: white;*/
+}
+
+.operazione{
+    background-color: rgba(187, 178, 178, 0.67);
+    display: flex;
+    flex-direction: column;
+    margin: 50px 300px;
+    border-radius: 10px;
+}
+
+#tipo-operazione{
+    text-align: center;
+}
+
+#andamento-operazione{
+    text-align: center;
+    margin-bottom: 20px;
+}
