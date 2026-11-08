@@ -7,6 +7,8 @@
 4)inserisci la richiesta finale: nome=CLIENTI
 http://localhost/webService/web-service/Remote/Rep/test.php?nome=CLIENTI*/
 
+/*http://localhost/webService/web-service/Remote/test.php?tabella=CLIENTI&offset=0&tuple=50*/
+
 require_once "Database.php";
 require_once "ClientiRepository.php";
 require_once "UtenzeRepository.php";
@@ -14,6 +16,6 @@ require_once "LettureRepository.php";
 require_once "FattureRepository.php";
 require_once "ServerAPI.php";
 
-$api = new ServerAPI();
+$api = new API();
 
-$api->esegui();
+$api->carica();

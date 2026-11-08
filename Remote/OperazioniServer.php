@@ -1,6 +1,6 @@
 <?php
 
-class ServerAPI
+class OperazioniServer
 {
     private ClientiRepository $clienti;
     private UtenzeRepository $utenze;
@@ -22,8 +22,8 @@ class ServerAPI
         header("Content-Type: application/json; charset=UTF-8");
 
         $tabella = $_GET["tabella"] ?? null;
-        $offset = $_GET["offset"] ?? null;
-        $tuple = $_GET["tuple"] ?? null;
+        $offset = $_GET["offset"] ?? 0; //valore default di offset = 0
+        $tuple = $_GET["tuple"] ?? 100; //valore default di tuple prese = 
 
         if ($tabella === null) {
             http_response_code(400);
