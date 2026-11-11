@@ -78,15 +78,10 @@ class Utenza(models.Model):
     
 # modello corrispondente a tabella Lettura
 class Lettura(models.Model):
-    numero = models.PositiveIntegerField(
-        primary_key=True,
-        null=False
-    )
+    numero = models.PositiveIntegerField()
     utenza = models.ForeignKey(
         Utenza,
         on_delete=models.PROTECT,
-        primary_key=True,
-        null=False
     )
     fattura = models.ForeignKey(
         Fattura,
@@ -94,7 +89,9 @@ class Lettura(models.Model):
         null=True,
         blank=True
     )
-    data = models.CharField(
-        max_length=10
-    )
+    data = models.CharField(max_length=10)
     valore = models.PositiveIntegerField()
+
+    class Meta:
+        #numero e utenza di lettura e' unica nel DB
+        constraints = [models.UniqueConstraint(fields=['numero', 'utenza'], name='unique_lettura_utenza')]

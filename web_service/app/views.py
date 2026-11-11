@@ -1,20 +1,26 @@
 from django.shortcuts import render
+from django.db import IntegrityError, OperationalError  #gestione errori DB
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .serializers import ClienteSerializer, FatturaSerializer, LetturaSerializer, UtenzaSerializer
+from .models import Cliente, Fattura, Lettura, Utenza  #AGGIUNTO modelli
 
 # Create your views here.
 
 def inserisci(request, serializer_class, model_class):
     try:
+        #Legge la lista JSON inviata dalla Servlet
         serializer = serializer_class(data=request.data, many=True)
 
+        # Se i dati non rispettano la struttura prevista, restituisce errore 400
         if not serializer.is_valid():
             return Response({
                 'codice_errore': 'DATI_NON_VALIDI',
                 'dettagli': serializer.errors
             }, status=400)
 
+        #Trasforma i dati in istanze del modello e le salva nel DB
         istanze = [model_class(**dato) for dato in serializer.validated_data]
         model_class.objects.bulk_create(istanze)
 
@@ -51,7 +57,7 @@ def inserisci_fatture(request):
     return inserisci(request, FatturaSerializer, Fattura)
 
 @api_view(['POST'])
-def inserisci_prodotti(request):
+def inserisci_letture(request):
     return inserisci(request, LetturaSerializer, Lettura)
 
 @api_view(['POST'])
