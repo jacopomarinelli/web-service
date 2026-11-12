@@ -21,3 +21,5 @@ class API {
 
 $api = new API();
 $api->carica();
+
+/* https://aquabear.altervista.org/Remote/API.php?tabella=FATTURE&offset=0&tuple=4000 */
