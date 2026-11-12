@@ -18,3 +18,6 @@ class API {
     }
 
 }
+
+$api = new API();
+$api->carica();

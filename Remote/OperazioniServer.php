@@ -1,5 +1,11 @@
 <?php
 
+require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/Repository/ClientiRepository.php';
+require_once __DIR__ . '/Repository/UtenzeRepository.php';
+require_once __DIR__ . '/Repository/LettureRepository.php';
+require_once __DIR__ . '/Repository/FattureRepository.php';
+
 class OperazioniServer
 {
     private ClientiRepository $clienti;
