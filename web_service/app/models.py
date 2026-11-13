@@ -20,7 +20,7 @@ class Cliente(models.Model):
     indirizzo = models.CharField(
         max_length=27
     )
-    città = models.CharField(
+    citta = models.CharField(
         max_length=15
     )
 
@@ -55,21 +55,21 @@ class Utenza(models.Model):
         primary_key=True,
         null=False
     )
-    codice_cliente = models.ForeignKey(
+    cliente = models.ForeignKey(
         Cliente,
         on_delete=models.PROTECT
+    )
+    data_apertura = models.CharField(
+        max_length=10
     )
     indirizzo = models.CharField(
         max_length=27
     )
-    città = models.CharField(
+    citta = models.CharField(
         max_length=15
     )
     stato = models.CharField(
         max_length=8
-    )
-    data_apertura = models.CharField(
-        max_length=10
     )
     data_chiusura = models.CharField(
         max_length=10,
