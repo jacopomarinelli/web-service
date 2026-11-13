@@ -1,0 +1,4 @@
+php.url=https://aquabear.altervista.org/Remote/API.php
+django.base.url=http://localhost:8000/api
+batch.size=400
+django.token=

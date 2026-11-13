@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Migrazione Dati</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+        .bottoni { display: flex; gap: 10px; margin: 20px 0; }
+        button { padding: 12px 18px; font-size: 15px; cursor: pointer; }
+        button:disabled { cursor: not-allowed; opacity: 0.5; }
+        .box { background: #f4f4f4; padding: 15px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <h2>Migrazione Altervista PHP &rarr; Django</h2>
+    <p>Esegui la migrazione nell'ordine obbligatorio:</p>
+
+    <div class="bottoni">
+        <button id="btn-CLIENTI" onclick="avvia('CLIENTI')">1. CLIENTI</button>
+        <button id="btn-FATTURE" onclick="avvia('FATTURE')" disabled>2. FATTURE</button>
+        <button id="btn-UTENZE" onclick="avvia('UTENZE')" disabled>3. UTENZE</button>
+        <button id="btn-LETTURE" onclick="avvia('LETTURE')" disabled>4. LETTURE</button>
+    </div>
+
+    <div class="box">
+        <div><strong>Stato:</strong> <span id="stato">IN_ATTESA</span></div>
+        <div><strong>Tabella corrente:</strong> <span id="tabella">-</span></div>
+        <div><strong>Tuple migrate:</strong> <span id="tuple">0</span></div>
+        <div style="color: red; margin-top: 8px;" id="errore"></div>
+    </div>
+
+    <script>
+        const ORDINE = ["CLIENTI", "FATTURE", "UTENZE", "LETTURE"];
+
+        async function avvia(tabella) {
+            await fetch('migrate?tabella=' + tabella, { method: 'POST' });
+            aggiornaStato();
+        }
+
+        async function aggiornaStato() {
+            try {
+                const res = await fetch('migrate');
+                const data = await res.json();
+
+                document.getElementById('stato').textContent = data.stato;
+                document.getElementById('tabella').textContent = data.tabellaCorrente || '-';
+                document.getElementById('tuple').textContent = data.tupleMigrate;
+                document.getElementById('errore').textContent = data.errore ? "Errore: " + data.errore : "";
+
+                const inCorso = data.stato === "IN_CORSO";
+                ORDINE.forEach((nomeTab, idx) => {
+                    const btn = document.getElementById('btn-' + nomeTab);
+                    const completata = data.tabelleCompletate.includes(nomeTab);
+                    const precedenteCompletata = idx === 0 || data.tabelleCompletate.includes(ORDINE[idx - 1]);
+
+                    btn.textContent = (idx + 1) + ". " + nomeTab + (completata ? " ✓" : "");
+                    btn.disabled = inCorso || !precedenteCompletata;
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        setInterval(aggiornaStato, 1000);
+        aggiornaStato();
+    </script>
+</body>
+</html>
