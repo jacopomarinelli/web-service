@@ -24,9 +24,14 @@ class Database {
                 );
             }
             //gestione errori di connessione
-            self::$connection->setAttribute(
+            self::$connection->setAttribute(    
                 PDO::ATTR_ERRMODE,
                 PDO::ERRMODE_EXCEPTION
+            );
+            //mette nomi colonne tabelle in minuscolo
+            self::$connection->setAttribute(    
+                PDO::ATTR_CASE,
+                PDO::CASE_LOWER
             );
         }
         return self::$connection;
