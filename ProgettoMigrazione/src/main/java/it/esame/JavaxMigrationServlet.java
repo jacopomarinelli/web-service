@@ -30,7 +30,7 @@ public class JavaxMigrationServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String tabella = req.getParameter("tabella");
-        if (tabella == null) tabella = req.getParameter("table");
+        //if (tabella == null) tabella = req.getParameter("table");
 
         int status = service.avviaMigrazione(tabella);
         resp.setStatus(status);

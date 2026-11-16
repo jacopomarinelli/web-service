@@ -41,7 +41,6 @@ public class MigrationService {
     private final String phpUrl;
     private final String djangoBaseUrl;
     private final int batchSize;
-    private final String djangoToken;
 
     private final Gson gson = new Gson();
     private final OkHttpClient client = new OkHttpClient.Builder()
@@ -72,7 +71,6 @@ public class MigrationService {
         this.phpUrl = props.getProperty("php.url", "https://aquabear.altervista.org/Remote/API.php");
         this.djangoBaseUrl = props.getProperty("django.base.url", "http://localhost:8000/api");
         this.batchSize = Integer.parseInt(props.getProperty("batch.size", "400"));
-        this.djangoToken = props.getProperty("django.token", "").trim();
 
         if (batchSize <= 0) {
             throw new IllegalArgumentException("Batch size non valido");
@@ -201,10 +199,6 @@ public class MigrationService {
                 .url(url)
                 .post(body);
 
-        if (!djangoToken.isEmpty()) {
-            reqBuilder.header("Authorization", "Token " + djangoToken);
-        }
-
         try (Response response = client.newCall(reqBuilder.build()).execute()) {
             return response.isSuccessful();
         }
@@ -217,4 +211,6 @@ public class MigrationService {
         }
         return element.getAsJsonArray().size();
     }
+
+
 }
