@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JakartaMigrationServlet extends HttpServlet {
+    
     private final MigrationService service = new MigrationService();
 
     @Override
@@ -30,7 +31,7 @@ public class JakartaMigrationServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String tabella = req.getParameter("tabella");
-        if (tabella == null) tabella = req.getParameter("table");
+        //if (tabella == null) tabella = req.getParameter("table");
 
         int status = service.avviaMigrazione(tabella);
         resp.setStatus(status);
@@ -38,8 +39,9 @@ public class JakartaMigrationServlet extends HttpServlet {
     }
 
     private void setCors(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Origin", "*"); // da inserire accettare solo da PHP e Django
         resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
     }
+
 }

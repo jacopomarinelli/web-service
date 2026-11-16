@@ -14,8 +14,11 @@ class LettureRepository {
     /** Scrive la query SQL per la tabella LETTURE ricevendo il valore dell'offset e il numero di tuple richieste
      *  e ritorna il risultato */
     public function recuperaLetture($offset, $tuple): array {
-        $sql = "SELECT * FROM LETTURE LIMIT $offset, $tuple;";
-        $stmt = $this->db->query($sql);
+        $sql = "SELECT * FROM LETTURE ORDER BY NUMERO LIMIT :offset, :tuple";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':offset', max(0, (int) $offset), PDO::PARAM_INT);
+        $stmt->bindValue(':tuple', max(1, (int) $tuple), PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
