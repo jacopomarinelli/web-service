@@ -1,10 +1,12 @@
 package it.esame;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet("/migrate")
 public class JavaxMigrationServlet extends HttpServlet {
     private final MigrationService service = new MigrationService();
 
