@@ -73,7 +73,8 @@ class Utenza(models.Model):
     )
     data_chiusura = models.CharField(
         max_length=10,
-        blank=True
+        blank=True,
+        null=True
     )
     
 # modello corrispondente a tabella Lettura

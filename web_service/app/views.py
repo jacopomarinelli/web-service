@@ -22,11 +22,11 @@ def inserisci(request, serializer_class, model_class):
 
         #Trasforma i dati in istanze del modello e le salva nel DB
         istanze = [model_class(**dato) for dato in serializer.validated_data]
-        model_class.objects.bulk_create(istanze)
+        model_class.objects.bulk_create(istanze, ignore_conflicts=True)
 
         return Response({
             'esito': 'ok',
-            'righe_inserite': len(istanze)
+            'righe_in_tabella': model_class.objects.count()
         }, status=201)
 
     except IntegrityError:
