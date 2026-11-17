@@ -14,8 +14,11 @@ class ClientiRepository {
     /** Scrive la query SQL per la tabella CLIENTI ricevendo il valore dell'offset e il numero di tuple richieste
      *  e ritorna il risultato */
     public function recuperaClienti($offset, $tuple): array {
-        $sql = "SELECT * FROM CLIENTI LIMIT $offset, $tuple;";
-        $stmt = $this->db->query($sql);
+        $sql = "SELECT * FROM CLIENTI ORDER BY CODICE LIMIT :offset, :tuple";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':offset', max(0, (int) $offset), PDO::PARAM_INT);
+        $stmt->bindValue(':tuple', max(1, (int) $tuple), PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
