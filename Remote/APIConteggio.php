@@ -2,9 +2,8 @@
 
 require_once __DIR__ . '/OperazioniServer.php';
 
-/**Classe API che permette l'interfaccia tra il codice PHP 
- * di recupero dati SQL con la Servlet Java */
-class API {
+/**Classe API che permette lo scambio delle informazioni sul numero di righe con la Servlet Java */
+class APIConteggio {
 
     private OperazioniServer $op;
 
@@ -14,12 +13,10 @@ class API {
 
     /** Permette trasferimento dei dati dal database su Altervista alla Servlet Java*/
     public function carica(){
-        $this->op->esegui();
+        $this->op->contaRighe();
     }
 
 }
 
-$api = new API();
+$api = new APIConteggio();
 $api->carica();
-
-/* https://aquabear.altervista.org/Remote/API.php?tabella=FATTURE&offset=0&tuple=4000 */

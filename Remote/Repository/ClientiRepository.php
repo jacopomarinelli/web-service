@@ -21,4 +21,11 @@ class ClientiRepository {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /** Scrive la query SQL per recuperare il numero totale di tuple presenti in tabella */
+    public function recuperaNumeroClienti(): int {
+        $sql = "SELECT COUNT(*) FROM CLIENTI";
+        $stmt = $this->db->query($sql);
+        return (int) $stmt->fetchColumn();
+    }
 }

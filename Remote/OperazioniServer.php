@@ -72,4 +72,19 @@ class OperazioniServer
         echo json_encode($risultato);
         }
     }
+
+    /** Ritorna il numero di righe presenti per ogni tabella */
+    public function contaRighe(): void {
+        {        
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $numeroClienti = $this->clienti->recuperaNumeroClienti();
+        $numeroFatture = $this->fatture->recuperaNumeroFatture();
+        $numeroUtenze = $this->utenze->recuperaNumeroUtenze();
+        $numeroLetture = $this->letture->recuperaNumeroLetture();
+        $risultato = [$numeroClienti, $numeroFatture, $numeroUtenze, $numeroLetture];
+
+        echo json_encode($risultato);
+        }
+    }
 }

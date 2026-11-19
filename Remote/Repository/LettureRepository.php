@@ -21,4 +21,11 @@ class LettureRepository {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /** Scrive la query SQL per recuperare il numero totale di tuple presenti in tabella */
+    public function recuperaNumeroLetture(): int {
+        $sql = "SELECT COUNT(*) FROM LETTURE";
+        $stmt = $this->db->query($sql);
+        return (int) $stmt->fetchColumn();
+    }
 }

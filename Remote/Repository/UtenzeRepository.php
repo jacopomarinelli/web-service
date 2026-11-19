@@ -21,4 +21,11 @@ class UtenzeRepository {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /** Scrive la query SQL per recuperare il numero totale di tuple presenti in tabella */
+    public function recuperaNumeroUtenze(): int {
+        $sql = "SELECT COUNT(*) FROM UTENZE";
+        $stmt = $this->db->query($sql);
+        return (int) $stmt->fetchColumn();
+    }
 }
