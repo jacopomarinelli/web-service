@@ -1,6 +1,29 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 # Create your models here.
+
+# validatori per formato campi
+codice_cliente_validator = RegexValidator(
+    regex=r'^[A-Z]{3}\d{3}$',
+    message="Formato corretto: 3 lettere seguite da 3 cifre"
+)
+codice_fiscale_validator = RegexValidator(
+    regex=r'^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$',
+    message="Formato corretto: codice fiscale"
+)
+numero_fattura_validator = RegexValidator(
+    regex=r'^FT-\d{4}-\d{5}$',
+    message="Formato corretto: FT-anno-numero"
+)
+stringa_data_validator = RegexValidator(
+    regex=r'^(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/\d{4}$',
+    message="Formato atteso: gg/mm/aaaa",
+)
+codice_numerico_validator = RegexValidator(
+    regex=r'^\d{8}$',
+    message="Formato corretto: 8 cifre"
+)
 
 # modello corrispondente a tabella Cliente
 class Cliente(models.Model):
@@ -8,20 +31,22 @@ class Cliente(models.Model):
         max_length=6,
         unique=True,
         primary_key=True,
-        null=False
+        null=False,
+        validators=[codice_cliente_validator]
     )
     codice_fiscale = models.CharField(
         max_length=16,
-        unique=True
+        unique=True,
+        validators=[codice_fiscale_validator]
     )
     ragione_sociale = models.CharField(
-        max_length=50
+        max_length=60
     )
     indirizzo = models.CharField(
-        max_length=27
+        max_length=35
     )
     citta = models.CharField(
-        max_length=15
+        max_length=20
     )
 
 # modello corrispondente a tabella Fattura
@@ -30,43 +55,48 @@ class Fattura(models.Model):
         max_length=13,
         unique=True,
         primary_key=True,
-        null=False
+        null=False,
+        validators=[numero_fattura_validator]
     )
     data = models.CharField(
-        max_length=10
+        max_length=10,
+        validators=[stringa_data_validator]
     )
     imponibile = models.DecimalField(
-        max_digits = 7,
-        decimal_places = 2
+        max_digits=7,
+        decimal_places=2
     )
     iva = models.DecimalField(
-        max_digits = 6,
-        decimal_places = 2
+        max_digits=6,
+        decimal_places=2
     )
     totale = models.DecimalField(
-        max_digits = 7,
-        decimal_places = 2
+        max_digits=7,
+        decimal_places=2
     )
 
 # modello corrispondente a tabella Utenza
 class Utenza(models.Model):
-    codice = models.PositiveIntegerField(
+    codice = models.CharField(
+        max_length=8,
         unique=True,
         primary_key=True,
-        null=False
+        null=False,
+        validators=[codice_numerico_validator]
     )
     cliente = models.ForeignKey(
         Cliente,
         on_delete=models.PROTECT
     )
     data_apertura = models.CharField(
-        max_length=10
+        max_length=10,
+        validators = [stringa_data_validator]
     )
     indirizzo = models.CharField(
-        max_length=27
+        max_length=35
     )
     citta = models.CharField(
-        max_length=15
+        max_length=20
     )
     stato = models.CharField(
         max_length=8
@@ -74,15 +104,20 @@ class Utenza(models.Model):
     data_chiusura = models.CharField(
         max_length=10,
         blank=True,
-        null=True
+        null=True,
+        validators = [stringa_data_validator]
     )
     
 # modello corrispondente a tabella Lettura
 class Lettura(models.Model):
-    numero = models.PositiveIntegerField()
+    numero = models.CharField(
+        max_length=8,
+        unique=True,
+        validators=[codice_numerico_validator]
+    )
     utenza = models.ForeignKey(
         Utenza,
-        on_delete=models.PROTECT,
+        on_delete=models.PROTECT
     )
     fattura = models.ForeignKey(
         Fattura,
@@ -90,7 +125,10 @@ class Lettura(models.Model):
         null=True,
         blank=True
     )
-    data = models.CharField(max_length=10)
+    data = models.CharField(
+        max_length=10,
+        validators = [stringa_data_validator]
+    )
     valore = models.PositiveIntegerField()
 
     class Meta:
