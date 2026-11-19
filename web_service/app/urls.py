@@ -24,4 +24,5 @@ urlpatterns = [
     path('fatture/', views.inserisci_fatture),
     path('letture/', views.inserisci_letture),
     path('utenze/', views.inserisci_utenze),
+    path('conteggi/', views.ritorna_righe_presenti),
 ]

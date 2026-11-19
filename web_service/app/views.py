@@ -64,3 +64,12 @@ def inserisci_letture(request):
 def inserisci_utenze(request):
     return inserisci(request, UtenzaSerializer, Utenza)
 
+
+@api_view(['GET'])
+def ritorna_righe_presenti(request):
+    return Response({
+        'righe_in_clienti': Cliente.objects.count(),
+        'righe_in_fatture': Fattura.objects.count(),
+        'righe_in_utenze': Utenza.objects.count(),
+        'righe_in_letture': Lettura.objects.count(),
+    })
